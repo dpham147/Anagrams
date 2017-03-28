@@ -33,6 +33,7 @@ public class AnagramDictionary {
     private static final int MIN_NUM_ANAGRAMS = 5;
     private static final int DEFAULT_WORD_LENGTH = 3;
     private static final int MAX_WORD_LENGTH = 7;
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
     private Random random = new Random();
     private ArrayList<String> wordList = new ArrayList<String>();
     private HashSet<String> wordSet = new HashSet<String>();
@@ -65,10 +66,12 @@ public class AnagramDictionary {
     }
 
     public boolean isGoodWord(String word, String base) {
-        if (wordSet.contains(sortLetters(word))){
-
+        if (wordSet.contains(sortLetters(word)))
+        {
+            return true;
         }
-        return true;
+        else
+            return false;
     }
 
     public List<String> getAnagrams(String targetWord) {
@@ -92,13 +95,37 @@ public class AnagramDictionary {
 
     public List<String> getAnagramsWithOneMoreLetter(String word) {
         ArrayList<String> result = new ArrayList<String>();
-
+        for (int i = 0; i < ALPHABET.length(); i++)
+        {
+            String sorted = sortLetters(word + ALPHABET.substring(i, i+1));
+            if (wordSet.contains(sorted))
+            {
+                for (int j = 0; j < lettersToWord.get(sorted).size(); j++)
+                {
+                    result.add(lettersToWord.get(sorted).get(j));
+                }
+            }
+        }
 
         return result;
     }
 
     public String pickGoodStarterWord() {
-        return "post";
+//        int rand = random.nextInt(wordList.size());
+//        while (wordList.get(rand).length() < MIN_NUM_ANAGRAMS)
+//        {
+//            if (rand < wordList.size())
+//            {
+//                rand++;
+//            }
+//            else
+//            {
+//                rand = 0;
+//            }
+//        }
+//        return wordList.get(rand);
+
+        return "Post";
     }
 
     public String sortLetters(String input) {
